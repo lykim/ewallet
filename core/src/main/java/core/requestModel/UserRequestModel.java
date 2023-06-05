@@ -1,5 +1,5 @@
 package core.requestModel;
 
-public class UserRequestModel {
+public class UserRequestModel extends RequestModel{
 	public String userName;
 }

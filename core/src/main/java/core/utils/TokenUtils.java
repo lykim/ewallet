@@ -42,4 +42,10 @@ public class TokenUtils {
 			return null;
 		}
 	}
+	
+	public static String getUsernameFromToken(String jwt) {
+		Jws<Claims> claims = parseClaims(jwt);
+		Claims claimsBody = claims.getBody();
+		return claimsBody.getSubject();
+	}
 }

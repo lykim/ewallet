@@ -37,6 +37,15 @@ public class UserGatewayMock implements UserGateway{
 		return optionalUser.isPresent() ? optionalUser.get() : null;
 	}
 
+	@Override
+	public void addBalance(String username, int amount) {
+		User user = findUserByUsername(username);
+		if(user != null) {
+			user.setBalanceAmount( user.getBalanceAmount() + amount );
+		}
+		
+	}
+
 	
 
 }

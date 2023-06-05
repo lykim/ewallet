@@ -17,12 +17,14 @@ public class ApplicationConfig {
 	private Map<String, GatewayConfig> gatewayConfigMap = new HashMap<>();
 	private Properties prop;
 	private String environment;
+	private String persistence;
 	private ApplicationConfig() {
     	try(InputStream input = ClassLoader.getSystemResourceAsStream("application.properties")){
-    		addGatewayConfig("TEST", new InMemoryGateway());
+    		addGatewayConfig("IN_MEMORY", new InMemoryGateway());
     		prop = new Properties();
             prop.load(input);
             environment = prop.getProperty("environment");
+            persistence = prop.getProperty("persistence");
     	}catch(IOException ex) {
     		System.out.println("CONFIG PROPERTIES ERROR");
             ex.printStackTrace();
@@ -30,7 +32,7 @@ public class ApplicationConfig {
 	}
 	
 	public void setGateways() {
-		gatewayConfigMap.get(environment).setGateways();
+		gatewayConfigMap.get(persistence).setGateways();
 	}
 	
 	public void addGatewayConfig(String key, GatewayConfig gatewayConfig) {
@@ -38,11 +40,14 @@ public class ApplicationConfig {
 	}
 	
 	public void cleanGatewayStoreage() {
-		gatewayConfigMap.get(environment).cleanStoreage();
+		gatewayConfigMap.get(persistence).cleanStoreage();
 	}
 	
 	public GatewayConfig getGatewayConfig() {
-		return gatewayConfigMap.get(environment);
+		return gatewayConfigMap.get(persistence);
+	}
+	public String getEnvironment() {
+		return environment;
 	}
 
 }
